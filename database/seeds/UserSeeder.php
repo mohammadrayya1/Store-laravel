@@ -1,10 +1,16 @@
 <?php
+
+
+
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\FactoryBuilder;
 use App\Models\User;
-class DatabaseSeeder extends Seeder
+
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,8 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       // factory(\App\Models\Tag::class, 10)->create();
-       factory(User::class, 10)->create();
-        factory(\App\Models\Product::class, 10)->create();
+        factory(User::class, 10)->create();
     }
 }

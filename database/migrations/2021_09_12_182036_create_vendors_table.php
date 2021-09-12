@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVendorTable extends Migration
+class CreateVendorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateVendorTable extends Migration
      */
     public function up()
     {
-        Schema::create("vendor",function (Blueprint $table){
-            //id BigInteger unsigned(موجب) Auto_increment
-            $table->id('store_id');
+        Schema::create('vendors', function (Blueprint $table) {
+
+            $table->id('vendor_id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->char('currancy',3)->default('USD');
@@ -31,15 +31,12 @@ class CreateVendorTable extends Migration
 
 
             //make two colum //create_timpstamp& updated_timestamp
-           // $table->timestamp('create_timestamp')->nullable();
+            // $table->timestamp('create_timestamp')->nullable();
             //$table->timestamp('updated_timstamp')->nullable();
 
+
             $table->timestamps();
-
         });
-
-
-
     }
 
     /**
@@ -49,6 +46,6 @@ class CreateVendorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor');
+        Schema::dropIfExists('vendors');
     }
 }

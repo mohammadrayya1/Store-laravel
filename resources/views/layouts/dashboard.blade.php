@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" type="text/css">
 </head>
 <body>
 <header class="py-2 bg-dark text-white mb-4">
@@ -23,19 +23,29 @@
         <aside class="col-md-3">
             <h4> Navigation Menu</h4>
             <nav>
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a href="/Dashbourd" class="nav-link">Dashboard</a></li>
-                    <li class="nav-item"><a href="" class="nav-link">Categories</a></li>
+                <ul class="nav flex-column nav-pills ">
+                    <li class="nav-item"><a href="{{route('admin.categories.create')}}" class="nav-link
+
+                        @if(Route::current()->getName() == 'admin.categories.create')
+                            active
+                       @endif
+                     ">Dashboard</a></li>
+                    <li class="nav-item"><a href="{{route('admin.categories.index')}}" class="nav-link
+
+                            @if(Route::current()->getName() == 'admin.categories.index')
+                           active
+                           @endif"> Categories</a></li>
                     <li class="nav-item"><a href="" class="nav-link">Products</a></li>
                 </ul>
             </nav>
         </aside>
         <main class="col-md-9">
-                @yield('content')
+            <div class="mb-4">
+                <h3 class="text-primary">{{$title??'Defulte'}} </h3>
+            </div>
 
 
-
-
+            {{$slot}}
 
 
         </main>

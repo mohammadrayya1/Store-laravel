@@ -1,6 +1,4 @@
-@extends('layouts.dashboard')
-
-@section('content')
+<x-dashboard-layout title="Categories">
     <h2 class="my-5 "> {{$title}}</h2>
 
 
@@ -13,4 +11,4 @@
 
     </form>
 
-@endsection
+</x-dashboard-layout>

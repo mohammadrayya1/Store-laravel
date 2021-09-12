@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Dotenv\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +25,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        \Illuminate\Support\Facades\Validator::extend('filter',function ($attribute,$value,$params)
+        {
+            foreach ((array)$params as $word) {
+                if (stripos($value, $word) !== false) {
+                    return false;
+                }
+
+            }
+            return true;
+        },'In-Valid');
+
+
     }
 }

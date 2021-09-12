@@ -1,38 +1,14 @@
-@extends('layouts.dashboard')
-@section('content')
+<x-dashboard-layout title="Categories" active="active">
 
-@if(session()->has('success'))
+    <x-alert  type="info">
 
-    <div class="alert alert-secondary">
-        {{session()->get('success')}}
+        <x-slot name="action">
 
-    </div>
+            <a href="#" class="btn btn-danger"> Action button</a>
+        </x-slot>
+        <p>Hello Mohammad</p>
 
-@endif
-@if(session()->has('successUpdate'))
-
-    <div class="alert alert-secondary">
-        {{session()->get('successUpdate')}}
-
-    </div>
-
-@endif
-@if(session()->has('successdelete'))
-
-    <div class="alert alert-danger">
-        {{session()->get('successdelete')}}
-
-    </div>
-
-@endif
-@if(session()->has('not_exist'))
-
-    <div class="alert alert-danger">
-        {{session()->get('not_exist')}}
-
-    </div>
-
-@endif
+     </x-alert>
 
             <h2 class="mb-4">Categories List</h2>
             <div class="table-toolbar">
@@ -76,7 +52,7 @@
                         <td>{{$category->name}}</td>
                         <td>{{$category->status}}</td>
                         <td>{{ $category->created_at}}</td>
-                        <td>{{$category->parent_name}}</td>
+                        <td>{{$category->parant->name}}</td>
                         <td><a href="{{ route('admin.categories.edit',[$category->id])}}" class="btn btn-dark">Edit</a></td>
 
                         <td>
@@ -91,4 +67,5 @@
                 @endforeach
                 </tbody>
             </table>
-            @endsection
+    </x-dashboard-layout>
+

@@ -31,7 +31,19 @@ Route::group(['prefix'=>
     });
 
 
+Route::get('admin/users/{id}','Admin\UserController@show')->name('admin.users.show');
+Route::get('admin/tages/{id}','Admin\TagsController@products')->name('admin.Tags.products');
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+    Route::get('regular',function ()
+    {
+        $text="0935655464";
+        $exp='/^(093|049)([0-9]{7})$/';
+        dd(preg_match($exp,$text));
+    });
+

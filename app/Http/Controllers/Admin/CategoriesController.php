@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Rules\WordFilter;
+use Dotenv\Validator;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use MongoDB\Driver\Query;
+use  Illuminate\Validation\Rule;
+
 
 class CategoriesController extends Controller
 {
@@ -21,8 +26,12 @@ class CategoriesController extends Controller
         })
             ->when($request->parent_id,function ($query,$value){
             $query->where('parent_id','=',$value);
-        })->leftjoin('categories as parant','categories.parent_id','=','parant.id')
+        })
+            /*->leftjoin('categories as parant','categories.parent_id','=','parant.id')
             ->select(['categories.*','parant.name as parent_name'])
+            */
+            //Eger load
+            ->with('parant')
             ->get();
 
         $parents=Category::all();
@@ -63,6 +72,7 @@ class CategoriesController extends Controller
     }
     public function update($id,Request $request)
     {
+        $this->validateRequest($request);
         $category=Category::find($id);
         $category->name=$request->name;
         $category->slug=Str::slug($request->name);
@@ -90,6 +100,12 @@ class CategoriesController extends Controller
     }
     public function store(Request $request)
     {
+        $this->validateRequest($request);
+
+
+
+
+
         $category =new Category();
         $category->name=$request->name;
         $category->slug=Str::slug($request->name);
@@ -103,6 +119,20 @@ class CategoriesController extends Controller
 
 
 
+
+    }
+    protected function validateRequest(Request $request)
+    {
+        $request->validate(   [
+
+            'status'=>['required',Rule::in(['active', 'inactive'])],
+            'name'=>['sometimes','required','min:3',Rule::unique('categories', 'name')->ignore($request->id)],
+            'description'=>['nullable','min:5','filter:php,laravel'],
+            'parent_id'=>['nullable','exists:categories,id'],
+            'image'=>['nullable','image','max:1048546','dimensions:min_width=200,min_height=200'],
+
+
+        ],  ['name.required'=>'هذا الحقل مطلوب']);
 
     }
 }
